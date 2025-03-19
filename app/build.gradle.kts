@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.dexter)
+
     implementation(libs.material.v100)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
