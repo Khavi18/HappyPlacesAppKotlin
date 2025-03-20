@@ -8,4 +8,6 @@
     <color name="primaryTextColor">#212121</color>
     <color name="secondaryTextColor">#9AA2AF</color>
     <color name="buttonBackgroundColor">#63ace5</color>
+    <color name="midGray">#757575</color>
+    <color name="itemHappyPlaceDescriptionTextColor">#606060</color>
 </resources>

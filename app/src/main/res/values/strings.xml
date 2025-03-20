@@ -6,4 +6,6 @@
     <string name="location">Location</string>
     <string name="save">SAVE</string>
     <string name="add_image">ADD IMAGE</string>
+    <string name="no_happy_places_found_yet">No Happy Places Found Yet. Kindly add one.</string>
+    <string name="image">Image</string>
 </resources>

@@ -41,6 +41,7 @@ android {
 
 dependencies {
 
+    implementation(libs.hdodenhof.circleimageview)
     implementation(libs.material.v100)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

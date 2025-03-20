@@ -1,6 +1,7 @@
 package com.example.happyplacesappkotlin.models
 
 import android.location.Location
+import java.io.Serializable
 
 data class HappyPlaceModel(
     val id: Int,
@@ -11,4 +12,4 @@ data class HappyPlaceModel(
     val location: String,
     val latitude: Double,
     val longitude: Double
-)
+): Serializable

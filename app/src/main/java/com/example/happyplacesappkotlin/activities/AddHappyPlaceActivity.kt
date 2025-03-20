@@ -46,6 +46,8 @@ class AddHappyPlaceActivity : AppCompatActivity() {
     private var mLatitude: Double = 0.0
     private var mLongitude: Double = 0.0
 
+    private var mHappyPlaceDetails: HappyPlaceModel? = null
+
     val requestPermission: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
                 permissions ->
@@ -83,6 +85,10 @@ class AddHappyPlaceActivity : AppCompatActivity() {
         binding?.toolbarAddPlace?.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
+        if(intent.hasExtra(MainActivity.EXTRA_PLACE_DETAILS)) {
+            mHappyPlaceDetails = intent.getSerializableExtra(MainActivity.EXTRA_PLACE_DETAILS) as HappyPlaceModel
+        }
         
         dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
@@ -95,7 +101,23 @@ class AddHappyPlaceActivity : AppCompatActivity() {
             DatePickerDialog(this@AddHappyPlaceActivity, dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
             updateDateInView()
         }
+
         updateDateInView()
+
+        if(mHappyPlaceDetails != null) {
+            supportActionBar?.title = "Edit Happy Place"
+            binding?.etTitle?.setText(mHappyPlaceDetails!!.title)
+            binding?.etDescription?.setText(mHappyPlaceDetails!!.description)
+            binding?.etDate?.setText(mHappyPlaceDetails!!.date)
+            binding?.etLocation?.setText(mHappyPlaceDetails!!.location)
+            mLatitude = mHappyPlaceDetails!!.latitude
+            mLongitude = mHappyPlaceDetails!!.longitude
+
+            saveImageToInternalStorage = Uri.parse(mHappyPlaceDetails!!.image)
+            binding?.ivPlaceImage?.setImageURI(saveImageToInternalStorage)
+            binding?.btnSave?.text = "UPDATE"
+        }
+
 
         binding?.tvAddImage?.setOnClickListener {
             val pictureDialog = AlertDialog.Builder(this@AddHappyPlaceActivity)
@@ -138,7 +160,7 @@ class AddHappyPlaceActivity : AppCompatActivity() {
                 val addHappyPlace = dbHandler.addHappyPlace(happyPlaceModel)
 
                 if(addHappyPlace > 0 ) {
-                    Toast.makeText(this@AddHappyPlaceActivity, "Details inserted successfully", Toast.LENGTH_SHORT).show()
+                    setResult(Activity.RESULT_OK)
                     finish()
                 }
                 }
