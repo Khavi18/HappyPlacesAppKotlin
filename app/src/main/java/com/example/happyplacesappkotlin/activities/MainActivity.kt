@@ -17,6 +17,7 @@ import com.example.happyplacesappkotlin.adapters.HappyPlacesAdapter
 import com.example.happyplacesappkotlin.database.DatabaseHandler
 import com.example.happyplacesappkotlin.databinding.ActivityMainBinding
 import com.example.happyplacesappkotlin.models.HappyPlaceModel
+import com.example.happyplacesappkotlin.utils.SwipeToDeleteCallback
 import com.example.happyplacesappkotlin.utils.SwipeToEditCallback
 
 class MainActivity : AppCompatActivity() {
@@ -60,10 +61,21 @@ class MainActivity : AppCompatActivity() {
                 adapter.notifyEditItem(this@MainActivity, viewHolder.adapterPosition, ADD_PLACE_ACTIVITY_REQUEST_CODE)
             }
         }
+
+        val deleteSwipeHandler = object : SwipeToDeleteCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding?.rvHappyPlacesList?.adapter as HappyPlacesAdapter
+                adapter.notifyDeleteItem(viewHolder.adapterPosition)
+                getHappyPlacesList()
+            }
+        }
         binding?.rvHappyPlacesList?.adapter = placesAdapter
 
         val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
         editItemTouchHelper.attachToRecyclerView(binding?.rvHappyPlacesList)
+
+        val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
+        deleteItemTouchHelper.attachToRecyclerView(binding?.rvHappyPlacesList)
 
     }
 

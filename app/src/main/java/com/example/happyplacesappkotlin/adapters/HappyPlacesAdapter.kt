@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.happyplacesappkotlin.activities.AddHappyPlaceActivity
 import com.example.happyplacesappkotlin.activities.MainActivity
+import com.example.happyplacesappkotlin.database.DatabaseHandler
 import com.example.happyplacesappkotlin.databinding.ItemHappyPlaceBinding
 import com.example.happyplacesappkotlin.models.HappyPlaceModel
 
@@ -49,7 +50,15 @@ class HappyPlacesAdapter(private val context: Context, private var list: ArrayLi
         intent.putExtra(MainActivity.EXTRA_PLACE_DETAILS, list[position])
         activity.startActivityForResult(intent, requestCode)
         notifyItemChanged(position)
+    }
 
+    fun notifyDeleteItem(position: Int) {
+        val dbHandler = DatabaseHandler(context)
+        val isDeleted = dbHandler.deleteHappyPlace(list[position])
+        if (isDeleted > 0) {
+            list.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 
     fun setOnClickListener(onClickListener: OnClickListener) {
