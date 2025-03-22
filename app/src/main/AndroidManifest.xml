@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -21,11 +22,22 @@
         android:theme="@style/Theme.HappyPlacesAppKotlin"
         tools:targetApi="31">
         <activity
-            android:name=".activities.HappyPlaceDetailActivity"
+            android:name=".activities.MapActivity"
             android:exported="false"
             android:label="HAPPY PLACE DETAILS"
             android:screenOrientation="portrait"
             android:theme="@style/CustomNoActionBarTheme"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_api_key" />
+
+        <activity
+            android:name=".activities.HappyPlaceDetailActivity"
+            android:exported="false"
+            android:label="HAPPY PLACE DETAILS"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomNoActionBarTheme" />
         <activity
             android:name=".activities.AddHappyPlaceActivity"
             android:exported="false"

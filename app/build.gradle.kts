@@ -41,6 +41,8 @@ android {
 
 dependencies {
 
+    implementation(libs.play.services.maps)
+    implementation(libs.places)
     implementation(libs.hdodenhof.circleimageview)
     implementation(libs.material.v100)
     implementation(libs.androidx.core.ktx)

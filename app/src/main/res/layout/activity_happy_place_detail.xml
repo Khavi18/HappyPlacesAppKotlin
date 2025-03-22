@@ -71,6 +71,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDescription"
                 tools:text="Location" />
+
+            <Button
+                android:id="@+id/btnViewOnMap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/shape_button_rounded"
+                android:text="@string/view_on_map"
+                android:textColor="@color/white"
+                android:textSize="@dimen/detail_screen_btn_view_on_map_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvLocation"
+                android:layout_marginStart="@dimen/detail_screen_btn_view_on_map_marginStartEnd"
+                android:layout_marginTop="@dimen/detail_screen_btn_view_on_map_marginTop"
+                android:layout_marginEnd="@dimen/detail_screen_btn_view_on_map_marginStartEnd"
+                android:paddingTop="@dimen/add_screen_btn_save_paddingTopBottom"
+                android:paddingBottom="@dimen/add_screen_btn_save_paddingTopBottom"/>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

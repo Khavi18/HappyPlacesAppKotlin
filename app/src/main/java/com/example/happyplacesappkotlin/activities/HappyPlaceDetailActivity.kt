@@ -1,5 +1,6 @@
 package com.example.happyplacesappkotlin.activities
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -30,6 +31,12 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
 
         if(intent.hasExtra(MainActivity.EXTRA_PLACE_DETAILS)) {
             happyPlaceDetailModel = intent.getSerializableExtra(MainActivity.EXTRA_PLACE_DETAILS) as HappyPlaceModel
+        }
+
+        binding?.btnViewOnMap?.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            intent.putExtra(MainActivity.EXTRA_PLACE_DETAILS, happyPlaceDetailModel)
+            startActivity(intent)
         }
 
         if(happyPlaceDetailModel != null) {

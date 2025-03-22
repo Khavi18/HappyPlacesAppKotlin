@@ -28,6 +28,10 @@ import com.example.happyplacesappkotlin.R
 import com.example.happyplacesappkotlin.database.DatabaseHandler
 import com.example.happyplacesappkotlin.databinding.ActivityAddHappyPlaceBinding
 import com.example.happyplacesappkotlin.models.HappyPlaceModel
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -68,6 +72,21 @@ class AddHappyPlaceActivity : AppCompatActivity() {
                 }
             }
         }
+
+    private val startAutocomplete : ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+        { result ->
+            if(result.resultCode == RESULT_OK  && result.data !=null) {
+                val intent: Intent = result.data!!
+                val place = Autocomplete.getPlaceFromIntent(intent)
+                binding?.etLocation?.setText(place.address)
+                mLatitude=place.latLng!!.latitude
+                mLongitude=place.latLng!!.longitude
+
+            } else if (result.resultCode == RESULT_CANCELED) {
+                Toast.makeText(this@AddHappyPlaceActivity,"User canceled",Toast.LENGTH_LONG).show()
+            }
+        }
     
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,6 +122,20 @@ class AddHappyPlaceActivity : AppCompatActivity() {
         }
 
         updateDateInView()
+
+        if(!Places.isInitialized()) {
+            Places.initialize(this@AddHappyPlaceActivity, resources.getString(R.string.google_maps_api_key))
+        }
+
+        binding?.etLocation?.setOnClickListener {
+            try {
+                val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
+                val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this@AddHappyPlaceActivity)
+                startAutocomplete.launch(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
         if(mHappyPlaceDetails != null) {
             supportActionBar?.title = "Edit Happy Place"
@@ -208,6 +241,11 @@ class AddHappyPlaceActivity : AppCompatActivity() {
                 saveImageToInternalStorage = saveImageToInternalStorage(thumbnail)
                 Log.e("Saved image:", "PAth :: $saveImageToInternalStorage")
                 binding?.ivPlaceImage?.setImageBitmap(thumbnail)
+            } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+                val place: Place = Autocomplete.getPlaceFromIntent(data!!)
+                binding?.etLocation?.setText(place.address)
+                mLatitude = place.latLng!!.latitude
+                mLongitude = place.latLng!!.longitude
             }
         }
     }
@@ -277,6 +315,7 @@ class AddHappyPlaceActivity : AppCompatActivity() {
         private const val GALLERY = 1
         private const val CAMERA = 2
         private const val IMAGE_DIRECTORY = "HappyPlacesImages"
+        private const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 3
     }
 
 

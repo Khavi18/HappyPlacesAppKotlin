@@ -113,6 +113,8 @@
                     android:inputType="textCapWords"
                     android:textColor="@color/primaryTextColor"
                     android:textColorHint="@color/secondaryTextColor"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
                     android:textSize="@dimen/edit_text_text_size" />
             </com.google.android.material.textfield.TextInputLayout>
 
