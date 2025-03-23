@@ -10,4 +10,5 @@
     <string name="image">Image</string>
     <string name="google_maps_api_key">API_KEY</string>
     <string name="view_on_map">VIEW ON MAP</string>
+    <string name="select_current_location">SELECT CURRENT LOCATION</string>
 </resources>

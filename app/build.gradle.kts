@@ -41,6 +41,9 @@ android {
 
 dependencies {
 
+    implementation (libs.kotlinx.coroutines.android)
+    implementation (libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.play.services.location)
     implementation(libs.play.services.maps)
     implementation(libs.places)
     implementation(libs.hdodenhof.circleimageview)
